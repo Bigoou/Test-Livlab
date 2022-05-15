@@ -1,4 +1,4 @@
-# first-app
+# Test Technique pour LIVLAB
 
 ## Project setup
 ```
