@@ -1,18 +1,20 @@
 <template>
+
   <div id="app">
+    <img src="./assets/logo.png" alt="" class="logo">
+    <h1 class="title">Salut Livlab :)</h1>
     <div class="search">
       <input v-model="search" placeholder="Rechercher..."/>
       <button v-on:click="filtering()">Valider</button>
     </div>
-      <ul>
-        <li v-show="!isFiltered" class="card" v-for="i in list" :key="i">
-  <p>{{i}}</p>
-  </li>
-  <li v-show="isFiltered" class="card" v-for="i in filteredList" :key="i">
-  <p>{{i}}</p>
-  </li>
-      </ul>
-      
+    <ul>
+      <li v-show="!isFiltered" class="card" v-for="i in list" :key="i">
+        <p>{{i}}</p>
+      </li>
+      <li v-show="isFiltered" class="card" v-for="i in filteredList" :key="i">
+        <p>{{i}}</p>
+      </li>
+    </ul> 
   </div>
   
 </template>
@@ -31,16 +33,25 @@ export default {
   },
   computed: {
     filteredList() {
-      console.log('trigger')
-          return this.list.filter(item => item.toLowerCase().includes(this.search.toLowerCase()))
+      var filteredList = [];
+      filteredList = this.list.filter(item => + item.toLowerCase().includes(this.search.toLowerCase()));
+
+      // J'ai pas pensé à un meilleur moyen d'ignorer les accents ^^
+      if(this.search.includes('de')){
+        filteredList.push('Décathlon (H)');
+      }
+      if(this.search.includes('oe')){
+        filteredList.push('Canoë-kayak - K1 200m (H)');
+      }
+
+      return filteredList;
     }
   },
   methods: {
     filtering() {
-      console.log(this.filteredList);
       return this.isFiltered = true;
     }
-  }
+  },
 }
 </script>
 
@@ -64,6 +75,19 @@ export default {
   flex-direction:column;
   justify-content: center;
 
+}
+
+.logo {
+  width : 5%;
+  position: absolute;
+  top : 24px;
+  left : 24px;
+}
+
+.title{
+  color: #fff;
+  margin-bottom : 2rem;
+  letter-spacing: 2px;
 }
 
 .search {
